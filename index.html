@@ -62,14 +62,10 @@ const CATS = [{"name": "Venerdì e logistica", "color": "#2b7fd6", "items": [{"n
 const HOME = {n:'Casa nostra',a:'Via Filippo Rega, 29, 80132 Napoli',la:40.8387547,lo:14.2404158};
 const HOUSE = '<svg viewBox="0 0 24 24"><path d="M12 3 2 11.5h3V21h5.5v-6h3v6H19v-9.5h3z"/></svg>';
 const map = L.map('map',{zoomControl:true}).setView([40.846,14.252],14);
-const base = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-  maxZoom:20,subdomains:'abcd',
-  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+const base = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  maxZoom:19,
+  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-// riserva: se lo sfondo CARTO non si carica, passa a OpenStreetMap
-let tileErr=0, switched=false;
-base.on('tileerror',()=>{ if(!switched && ++tileErr>6){ switched=true; map.removeLayer(base);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);} });
 
 const active = new Set(CATS.map((_,i)=>i));
 let onlySun = false;
